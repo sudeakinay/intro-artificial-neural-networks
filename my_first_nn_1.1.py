@@ -4,6 +4,7 @@ import numpy as np                      # allows scienftific computing
 import pandas as pd                     # allows easy manipulation of data structures   
 from pandas import DataFrame as df     
 import matplotlib.pyplot as plt
+from csv import reader
 
 class NeuralNetwork:
     # classes are the main building blocks of object-oriented programming
@@ -133,7 +134,7 @@ class NeuralNetwork:
 
         return cumulative_errors
 
-df = pd.read_csv("first_nn.csv")                      # add data
+df = pd.read_csv("dataset.csv")                      # add data
 input_vectors = df.drop(["Species"], axis = 1)
 targets = df.Species
 
