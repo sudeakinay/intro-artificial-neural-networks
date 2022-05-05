@@ -5,6 +5,7 @@ import pandas as pd                     # allows easy manipulation of data struc
 from pandas import DataFrame as df     
 import matplotlib.pyplot as plt
 from csv import reader
+import math
 
 class NeuralNetwork:
     # classes are the main building blocks of object-oriented programming
@@ -16,7 +17,7 @@ class NeuralNetwork:
         self.learning_rate = learning_rate
 
     # we'll use nonlinear functions are called activation functions: relu activation function
- 
+    
     def _LReLU(self, x):
         # a = 0.01 olsun
         if x < 0:
@@ -31,10 +32,26 @@ class NeuralNetwork:
         elif x >= 0:
             x = 1 
         return x
+    
+    def _tanh (self, x):
+        result = math.tanh((2 / (1 + np.exp(-2*x))) - 1)
+        return result
+        
+    def _tanh_deriv (self, x):
+        result_deriv = 1 - (self._tanh(x)**2)
+        return result_deriv
+
+    def _sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+    # this is a perfect function for our problem because we have just 2 outputs: 0 and 1
+    # and this function follows the bernoulli distribution
+
+    def _sigmoid_deriv(self, x):
+        return self._sigmoid(x) * (1 - self._sigmoid(x))
 
     def predict(self, input_vector):
         layer_1 = np.dot(input_vector, self.weights) + self.bias
-        layer_2 = self._LReLU(layer_1)
+        layer_2 = self._sigmoid(layer_1)
         prediction = layer_2
         return prediction
 
@@ -42,7 +59,7 @@ class NeuralNetwork:
 
     def _computer_gradients(self, input_vector, target):
         layer_1 = np.dot(input_vector, self.weights) + self.bias
-        layer_2 = self._LReLU(layer_1)
+        layer_2 = self._sigmoid(layer_1)
         prediction = layer_2
 
         # to adjust the weights we'll use the gradient descent and backpropagation algorithms
@@ -63,7 +80,7 @@ class NeuralNetwork:
         # the bias variable is an independent variable 
         # so the result after applying the power rule is 1:
 
-        dprediction_dlayer1 = self._LReLU_deriv(layer_1)
+        dprediction_dlayer1 = self._sigmoid_deriv(layer_1)
         dlayer1_dbias = 1
         dlayer1_dweights = (0 * self.weights) + (1 * input_vector)
 
@@ -128,6 +145,10 @@ class NeuralNetwork:
                 # we append the error to cumulative_errors: the array that stores the errors
                 cumulative_errors.append(cumulative_error)      # we'll use this array to plot the graph
 
+################################## STOP CRITERIA ##################################
+            # if (current_iteration >= 10000): this is not a good solution to make a stop criteria
+            #     break
+
             for i in cumulative_errors:
                 if i <= 10^(-5):
                     break  
@@ -139,20 +160,13 @@ input_vectors = df.drop(["Species"], axis = 1)
 targets = df.Species
 
 ################################################################
+df = pd.read_csv("dataset.csv")                      # add data
+input_vectors = df.drop(["Species"], axis = 1)
+targets = df.Species
+
 learning_rate = 0.001
 neural_network = NeuralNetwork(learning_rate)
 training_error = neural_network.train(input_vectors, targets, 100000000)
-
-test_data = [4.9,3.0,1.4,0.2]
-test_data_predict = neural_network.predict(test_data)
-if (test_data_predict <= 0.75):
-    print('Predict: Iris-setosa ', test_data_predict)
-
-elif(test_data_predict > 0.75 and test_data_predict < 1.51 ):
-     print('Predict: Iris-versicolor ', test_data_predict)
-
-else:
-  print('Predict: Iris-virginica ', test_data_predict)
 
 ################ hata grafiği ################
 plt.plot(training_error)
