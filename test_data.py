@@ -13,13 +13,13 @@ input_dimension = 4
 hidden_layers= 5
 loaded_model = NeuralNetwork(learning_rate, iterations, input_dimension, hidden_layers)
 
-df = pd.read_csv("train_data.csv")          # add train data
+df = pd.read_csv("intro-artificial-neural-networks/train_data.csv")          # add train data
 train_data = df.drop(["Species"], axis = 1)
 train_results = df.Species
 train_data = np.array(train_data)
 train_results = np.array(train_results)
 
-nf = pd.read_csv("test_data.csv")           # add test data
+nf = pd.read_csv("intro-artificial-neural-networks/test_data.csv")           # add test data
 test_data = nf.drop(["Species"], axis = 1)
 test_results = nf.Species
 test_data = np.array(test_data)

@@ -1,5 +1,4 @@
 #############################  MY NEURAL NETWORK MODEL (TRAIN) #############################
-from distutils.log import fatal
 import numpy as np                      # allows scienftific computing                                   
 import joblib                           # allows load models
 
@@ -111,13 +110,13 @@ class NeuralNetwork:
         test_data_pred = []
         prediction = np.dot(test_data, final_weights) + final_bias
         for i in range(len(test_data)):
-            if prediction[i] <= 0.8 :     # optimizing results
+            if prediction[i] <= 0.69 :     # optimizing results
                 test_data_pred.append(0)
                 print("Setosa")
-            elif (prediction[i] > 0.8).any() and (prediction[i] <= 1.1).any() :
+            elif (prediction[i] > 0.69).any() and (prediction[i] <= 1.5).any() :
                 test_data_pred.append(1)
                 print("Versicolor")
-            elif prediction[i] >= 1.1:
+            elif prediction[i] >= 1.5:
                 test_data_pred.append(2)  
                 print("Virginica")  
         return test_data_pred
