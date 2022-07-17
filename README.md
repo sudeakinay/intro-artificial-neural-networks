@@ -1,3 +1,3 @@
-# INTRODUCTION
+# INTRODUCTION TO ARTIFICIAL NEURAL NETWORKS
 
-Some description!
+This is a repo for my first studies of artificial neural networks.
