@@ -1,4 +1,4 @@
-# INTRODUCTION TO ARTIFICIAL NEURAL NETWORKS :heavy_check_mark:
+## INTRODUCTION TO ARTIFICIAL NEURAL NETWORKS :heavy_check_mark:
 
 ---
 
@@ -8,4 +8,6 @@
 - there are 2 files for testing and training --> `test.py` and `train.py`
     - these files also use the same dataset but the test and train datasets are in splitted form.
 
-<img align="middle" src="NN.png">
+<p align="center">
+  <img width="400" src="NN.png">
+</p>
